@@ -3,7 +3,9 @@ class FxTransactionsController < ApplicationController
 
   def create
     transaction = FxTransaction.new(fx_transactions_params)
-    # confirm if currency is valid
+    # create unique transction ids that suit organisation i.e {MM/DD/HH/AutoInc/CurrencyID}
+    transaction.id = rand(100..999)
+    # confirm if currency is valid from another service or api
     if transaction.save!
       response = {
         status: 200,
@@ -12,6 +14,7 @@ class FxTransactionsController < ApplicationController
       }
     end
     render json: response, status: :created
+
   rescue StandardError => e
     error = {
       status: 400,
@@ -23,11 +26,30 @@ class FxTransactionsController < ApplicationController
 
   def index
     transactions = FxTransaction.all
-    render json: transactions, status: :ok
+    # can add summary of transactions
+    response = {
+      status: 200,
+      message: "Success",
+      data: transactions
+    }
+    render json: response, status: :ok
+
+  rescue StandardError => e
+    error = {
+      status: 400,
+      error: "Something went wrong",
+      message: e
+    }
+  render json: error
   end
 
   def show
-    render json: @transaction
+    response = {
+      status: 200,
+      message: "Success",
+      data: @transaction
+    }
+    render json: response, status: :ok
   end
 
   private
@@ -38,6 +60,13 @@ class FxTransactionsController < ApplicationController
 
   def set_fx_transaction
     @transaction = FxTransaction.find(params[:id])
+  rescue StandardError => e
+    error = {
+      status: 404,
+      error: "Transaction not Found",
+      message: e
+    }
+  render json: error
   end
 
 end
