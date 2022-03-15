@@ -1,0 +1,2 @@
+class FxTransaction < ApplicationRecord
+end
