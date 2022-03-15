@@ -1,16 +1,29 @@
 class FxTransactionsController < ApplicationController
   before_action :set_fx_transaction, only: [:show]
 
-  def index
-    transactions = FxTransaction.all
-    render json: transactions
-  end
-
   def create
     transaction = FxTransaction.new(fx_transactions_params)
+    # confirm if currency is valid
     if transaction.save!
-      render json: transaction
+      response = {
+        status: 200,
+        message: "Created",
+        data: transaction
+      }
     end
+    render json: response, status: :created
+  rescue StandardError => e
+    error = {
+      status: 400,
+      error: "Something went wrong",
+      message: e
+    }
+  render json: error
+  end
+
+  def index
+    transactions = FxTransaction.all
+    render json: transactions, status: :ok
   end
 
   def show
