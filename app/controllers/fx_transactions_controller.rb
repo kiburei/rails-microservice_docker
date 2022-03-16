@@ -3,8 +3,8 @@ class FxTransactionsController < ApplicationController
 
   def create
     transaction = FxTransaction.new(fx_transactions_params)
-    # create unique transction ids that suit organisation i.e {MM/DD/HH/AutoInc/CurrencyID}
-    transaction.id = rand(100..999)
+
+    transaction.id = FxTransaction.transaction_id
     # confirm if currency is valid from another service or api
     if transaction.save!
       response = {
