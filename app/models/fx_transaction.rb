@@ -3,6 +3,8 @@ class FxTransaction < ApplicationRecord
   # ensure FxTransaction.last returns the last record in the db other than by id
   default_scope { order(created_at: :asc) }
 
+  after_create { publish_all_fx_transactions }
+
   def self.transaction_id
     # create unique transction ids that suit organisation i.e {MM/DD/HH/AutoInc/CurrencyID}
     # create 8 digit id
@@ -16,6 +18,10 @@ class FxTransaction < ApplicationRecord
     end
     transaction_id = month + time + increment
     return transaction_id
+  end
+
+  def publish_all_fx_transactions
+    Publisher.publish('fx_transactions', attributes)
   end
 
 
