@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   post 'transactions' => 'fx_transactions#create'
   get 'transactions' => 'fx_transactions#index'
   get 'transactions/:id' => 'fx_transactions#show'
@@ -6,4 +7,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  
 end

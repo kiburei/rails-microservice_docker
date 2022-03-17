@@ -1,25 +1,20 @@
 version: "3.9"
 services:
   rabbitmq:
-         image: rabbitmq:3-management-alpine
-         container_name: rabbitmq
-         volumes:
-             - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
-             - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
-             - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
-         environment:
-             RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
-             RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-             RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-         ports:
-             - 5672:5672
-             - 15672:15672
+    image: rabbitmq:alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - example_net
   db:
     image: postgres
     volumes:
       - ./tmp/db:/usr/local/var/postgres/postgresql.conf
     environment:
       POSTGRES_PASSWORD: password
+    networks:
+      - example_net
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -29,3 +24,11 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    networks:
+      - example_net
+networks:
+  example_net:
+    driver: bridge
+
+
+# 

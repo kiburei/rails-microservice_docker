@@ -1,5 +1,7 @@
 class FxTransactionsController < ApplicationController
+  require "./services/publisher.rb"
   before_action :set_fx_transaction, only: [:show]
+
 
   def create
     transaction = FxTransaction.new(fx_transactions_params)

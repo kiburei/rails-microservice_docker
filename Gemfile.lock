@@ -173,7 +173,16 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
+    serverengine (2.0.7)
+      sigdump (~> 0.2.2)
     set (1.0.2)
+    sigdump (0.2.4)
+    sneakers (2.11.0)
+      bunny (~> 2.12)
+      concurrent-ruby (~> 1.0)
+      rake
+      serverengine (~> 2.0.5)
+      thor
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
@@ -198,6 +207,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
   rspec-rails
+  sneakers
   tzinfo-data
 
 RUBY VERSION
