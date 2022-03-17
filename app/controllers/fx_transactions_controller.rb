@@ -1,7 +1,4 @@
 class FxTransactionsController < ApplicationController
-  require "./services/publisher.rb"
-  before_action :set_fx_transaction, only: [:show]
-
 
   def create
     transaction = FxTransaction.new(fx_transactions_params)
@@ -9,6 +6,8 @@ class FxTransactionsController < ApplicationController
     transaction.id = FxTransaction.transaction_id
     # confirm if currency is valid from another service or api
     if transaction.save!
+      # publish new fx_transaction to dash after create
+      FxTransactionsService.new(transaction.id).publish
       response = {
         status: 200,
         message: "Created",
@@ -27,14 +26,15 @@ class FxTransactionsController < ApplicationController
   end
 
   def index
-    transactions = FxTransaction.all
+    service = DashboardService.new
+    fx_transactions = service.get_fx_transactions_all
     # can add summary of transactions
     response = {
       status: 200,
       message: "Success",
-      data: transactions
+      data: fx_transactions
     }
-    render json: response, status: :ok
+    render json: response
 
   rescue StandardError => e
     error = {
@@ -46,10 +46,13 @@ class FxTransactionsController < ApplicationController
   end
 
   def show
+    service = DashboardService.new
+    fx_transaction = service.get_fx_transaction(params[:id])
+
     response = {
       status: 200,
       message: "Success",
-      data: @transaction
+      data: fx_transaction
     }
     render json: response, status: :ok
   end
@@ -60,15 +63,15 @@ class FxTransactionsController < ApplicationController
     params.require(:fx_transaction).permit(:customer_id, :input_amount, :input_currency, :output_amount, :output_currency, :transaction_date)
   end
 
-  def set_fx_transaction
-    @transaction = FxTransaction.find(params[:id])
-  rescue StandardError => e
-    error = {
-      status: 404,
-      error: "Transaction not Found",
-      message: e
-    }
-  render json: error
-  end
+  # def set_fx_transaction
+  #   @transaction = FxTransaction.find(params[:id])
+  # rescue StandardError => e
+  #   error = {
+  #     status: 404,
+  #     error: "Transaction not Found",
+  #     message: e
+  #   }
+  # render json: error
+  # end
 
 end

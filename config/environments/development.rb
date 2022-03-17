@@ -1,6 +1,14 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+# disable host configs
+  config.hosts.clear
+  # config.hosts = [
+  #   IPAddr.new("0.0.0.0/0"), # All IPv4 addresses.
+  #   IPAddr.new("::/0"),      # All IPv6 addresses.
+  #   "localhost", # The localhost reserved domain.
+  #   "fx_transactions_microservice-web-1"
+  # ]
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -8,6 +16,7 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.eager_load_paths << Rails.root.join("lib")
   # Do not eager load code on boot.
   config.eager_load = false
 
