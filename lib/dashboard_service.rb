@@ -2,11 +2,13 @@ class DashboardService
   require "http"
 
   def get_fx_transactions_all
-    JSON.parse(HTTP.get("#{bkd_fx_transactions_url}/transactions").body)
+    # JSON.parse(HTTP.get("#{bkd_fx_transactions_url}/transactions").body)
+    FxTransaction.all
   end
 
   def get_fx_transaction(transaction_id)
-    JSON.parse(HTTP.get("#{bkd_fx_transactions_url}/transactions/#{transaction_id}").body)
+    # JSON.parse(HTTP.get("#{bkd_fx_transactions_url}/transactions/#{transaction_id}").body)
+    FxTransaction.find(transaction_id)
   end
 
   private
