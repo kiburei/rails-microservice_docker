@@ -1,6 +1,7 @@
+require "http"
 class DashboardService
-  require "http"
 
+  # update from queue using seakers
   def get_fx_transactions_all
     # JSON.parse(HTTP.get("#{bkd_fx_transactions_url}/transactions").body)
     FxTransaction.all

@@ -1,5 +1,4 @@
 require "bunny"
-
 class FxTransactionsService
   attr_reader :fx_transaction
 

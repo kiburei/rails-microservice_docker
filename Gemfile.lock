@@ -105,6 +105,7 @@ GEM
     io-wait (0.2.1)
     irb (1.4.1)
       reline (>= 0.3.0)
+    json (2.6.1)
     llhttp-ffi (0.4.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -174,6 +175,7 @@ GEM
       zeitwerk (~> 2.5)
     rake (13.0.6)
     rbtree (0.4.5)
+    redis (4.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
     rspec-core (3.11.0)
@@ -193,7 +195,16 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
+    serverengine (2.0.7)
+      sigdump (~> 0.2.2)
     set (1.0.2)
+    sigdump (0.2.4)
+    sneakers (2.11.0)
+      bunny (~> 2.12)
+      concurrent-ruby (~> 1.0)
+      rake
+      serverengine (~> 2.0.5)
+      thor
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
@@ -218,10 +229,13 @@ DEPENDENCIES
   bunny
   debug
   http
+  json
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
+  redis
   rspec-rails
+  sneakers
   tzinfo-data
 
 RUBY VERSION

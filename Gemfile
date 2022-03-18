@@ -14,6 +14,12 @@ gem "puma", "~> 5.0"
 
 gem "bunny"
 
+gem 'sneakers' # subscribe to bunnt messages
+
+gem 'json'
+
+gem 'redis'
+
 gem "http"
 
 # gem 'sidekiq'
