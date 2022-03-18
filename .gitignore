@@ -27,3 +27,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore large files
+/.docker/rabbitmq/data/mnesia/rabbit@61d6d8d83575/quorum/rabbit@61d6d8d83575/00000001.wal
