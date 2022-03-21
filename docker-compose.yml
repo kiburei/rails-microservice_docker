@@ -17,7 +17,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/usr/local/var/postgres/postgresql.conf
+      - pgdata:/usr/local/var/postgres
     environment:
       POSTGRES_PASSWORD: password
     networks:
@@ -36,6 +36,5 @@ services:
 networks:
   example_net:
     driver: bridge
-
-
-#
+volumes:
+  pgdata:

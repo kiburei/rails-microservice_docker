@@ -1,10 +1,7 @@
 class FxTransaction < ApplicationRecord
-  require "./services/publisher.rb"
   validates :customer_id, :input_amount, :input_currency, :output_amount, :output_currency, :transaction_date, presence: true
   # ensure FxTransaction.last returns the last record in the db other than by id
   default_scope { order(created_at: :asc) }
-  # publish to dashboard
-  after_create { publish_to_dashboard }
 
   def self.transaction_id
     # create unique transction ids that suit organisation i.e {MM/DD/HH/AutoInc/CurrencyID}
@@ -21,11 +18,6 @@ class FxTransaction < ApplicationRecord
     return transaction_id
   end
 
-  private
-
-  def publish_to_dashboard
-    Publisher.publish('fx_transactions', attributes)
-  end
 
 
 

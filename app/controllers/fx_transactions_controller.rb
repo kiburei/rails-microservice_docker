@@ -16,13 +16,13 @@ class FxTransactionsController < ApplicationController
     end
     render json: response, status: :created
 
-  rescue StandardError => e
-    error = {
-      status: 400,
-      error: "Something went wrong",
-      message: e
-    }
-  render json: error
+    rescue StandardError => e
+      error = {
+        status: 400,
+        error: "Something went wrong",
+        message: e
+      }
+    render json: error
   end
 
   def index
