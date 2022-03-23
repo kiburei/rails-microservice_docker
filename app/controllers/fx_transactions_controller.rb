@@ -1,4 +1,5 @@
 class FxTransactionsController < ApplicationController
+  before_action :set_fx_transaction, only: [:update]
 
   def create
     transaction = FxTransaction.new(fx_transactions_params)
@@ -57,21 +58,30 @@ class FxTransactionsController < ApplicationController
     render json: response, status: :ok
   end
 
+  def update
+    @transaction.update(fx_transactions_params)
+    response = {
+      status: 200,
+      message: "Transaction Updated",
+      data: @transaction
+    }
+    render json: response
+  end
+
+  # def status
+  #
+  # end
+
   private
 
   def fx_transactions_params
     params.require(:fx_transaction).permit(:customer_id, :input_amount, :input_currency, :output_amount, :output_currency, :transaction_date)
   end
 
-  # def set_fx_transaction
-  #   @transaction = FxTransaction.find(params[:id])
-  # rescue StandardError => e
-  #   error = {
-  #     status: 404,
-  #     error: "Transaction not Found",
-  #     message: e
-  #   }
-  # render json: error
-  # end
+
+
+  def set_fx_transaction
+    @transaction = FxTransaction.find(params[:id])
+  end
 
 end
