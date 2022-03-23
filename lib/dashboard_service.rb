@@ -1,4 +1,5 @@
 require "http"
+require "bunny"
 class DashboardService
 
   # update from queue using seakers
