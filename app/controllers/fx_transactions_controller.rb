@@ -9,7 +9,7 @@ class FxTransactionsController < ApplicationController
       # publish new fx_transaction to dash after create
       FxTransactionsService.new(transaction.id).publish
       response = {
-        status: 200,
+        status: 201,
         message: "Created",
         data: transaction
       }
